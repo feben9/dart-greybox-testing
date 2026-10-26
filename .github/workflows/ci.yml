@@ -1,0 +1,44 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  scenario:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Dart dependencies
+        run: |
+          (cd demo_app && dart pub get)
+          (cd backend && dart pub get)
+
+      - name: Dart analyze
+        run: |
+          (cd demo_app && dart analyze --fatal-infos)
+          (cd backend && dart analyze --fatal-infos)
+
+      - name: Python test runner
+        run: pip install -r requirements-dev.txt
+
+      - name: Proxy unit tests + end-to-end scenario
+        run: python -m pytest -v -rA
+
+      - name: Upload scenario logs and capture
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scenario-artifacts
+          path: artifacts/
+          if-no-files-found: ignore

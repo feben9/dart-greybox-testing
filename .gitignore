@@ -1,0 +1,8 @@
+.dart_tool/
+.packages
+build/
+artifacts/
+__pycache__/
+.pytest_cache/
+*.jsonl
+.venv/

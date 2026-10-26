@@ -1,0 +1,6 @@
+name: demo_backend
+description: Tiny JSON backend for the grey-box testing demo.
+publish_to: none
+
+environment:
+  sdk: ^3.3.0

@@ -1,0 +1,11 @@
+name: demo_app
+description: >-
+  A small orders/inbox client that stands in for a Flutter app. It talks to
+  its backend through dio, the way most Flutter apps do.
+publish_to: none
+
+environment:
+  sdk: ^3.3.0
+
+dependencies:
+  dio: ^5.4.0
